@@ -1,1 +1,1 @@
-# ca-riscv-fpga-labs
+# retro-riscv-fpga
