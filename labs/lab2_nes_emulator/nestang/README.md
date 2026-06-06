@@ -1,0 +1,73 @@
+# NESTang：Tang Nano 20K NES 模拟器
+
+本目录来自 Sipeed `TangNano-20K-example` 仓库中的 `nestang` 示例，用于 Lab 2。原始示例基于 NESTang 项目，在 Tang Nano 20K 上实现 NES 模拟器。
+
+## 来源
+
+- Sipeed 示例仓库：`https://github.com/sipeed/TangNano-20K-example/tree/main/nestang`
+- 本次引入的上游提交：`154326f105e50cbb43dd4a3484ff3e32ce251b84`
+- NESTang 原始项目：`https://github.com/nand2mario/nestang`
+
+引入后已去掉外部仓库自己的 Git 管理，由当前课程项目仓库统一管理。
+
+## 硬件需求
+
+- Tang Nano 20K FPGA 板卡。
+- HDMI 显示器或采集设备。
+- 两个手柄及其转接板。
+- 面包板和杜邦线，用于减少手柄转接时的飞线混乱。
+- TF 卡，用于存放打包后的 NES 游戏镜像。
+
+## FPGA 程序下载
+
+示例中自带的 `nes.fs` 是预编译比特流。该文件较大，当前被 `.gitignore` 忽略，不作为本仓库源码提交。后续应优先在 Gowin 中重新综合、布局布线并生成自己的 `.fs`。
+
+临时验证时可以使用 Programmer 的 SRAM 下载方式；如果希望断电后仍保留程序，再考虑写入 Flash。
+
+## 游戏镜像准备
+
+使用 `tools/nes2img.py` 可以把多个 `.nes` 游戏打包成一个 TF 卡镜像。例如：
+
+```bash
+python nes2img.py -o games.img 1.nes 2.nes 3.nes
+```
+
+生成 `games.img` 后，可以使用 Balena Etcher 或 `dd` 写入 TF 卡。Linux 下示例命令如下：
+
+```bash
+sudo dd if=games.img of=/dev/sdx bs=512
+```
+
+注意：写 TF 卡镜像前必须确认目标盘符，避免误覆盖电脑硬盘。
+
+## 手柄连接
+
+默认工程使用两个手柄。上游说明中给出的默认引脚如下：
+
+| 玩家 2 信号 | FPGA 引脚 | 玩家 1 信号 | FPGA 引脚 |
+| --- | --- | --- | --- |
+| `clk2` | 52 | `clk` | 17 |
+| `mosi2` | 53 | `mosi` | 20 |
+| `miso2` | 71 | `miso` | 19 |
+| `cs2` | 72 | `cs` | 18 |
+
+上游说明中提到，玩家 1 对应右侧手柄约束。
+
+## 启动方式
+
+1. 连接 HDMI 显示器。
+2. 插入写好 `games.img` 的 TF 卡。
+3. 连接手柄转接板。
+4. 给 Tang Nano 20K 上电。
+5. 使用手柄按键 `2` 启动游戏。
+6. 使用 FPGA 板上 `S1` 按键切换到游戏选择菜单。
+
+## 后续阅读重点
+
+- `src/nestang_top.v`：顶层外设连接。
+- `src/cpu.v`：NES CPU。
+- `src/ppu.v`：图形处理器。
+- `src/apu.v`：音频处理器。
+- `src/mmu.v`：地址映射与 Mapper 相关逻辑。
+- `src/sd_loader.v`、`src/sd_reader.sv`：TF 卡读取和 ROM 加载。
+- `src/hdmi2/`：HDMI 输出相关模块。

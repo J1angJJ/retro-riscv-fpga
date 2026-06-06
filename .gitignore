@@ -44,6 +44,10 @@ Desktop.ini
 *.gprj.user
 *.gprj.user.*
 *.ipc
+!labs/**/src/**/*.ipc
+**/gowin/project/**/impl/
+**/gowin/**/impl/
+**/gowin/**/temp/
 *.temp/
 *.impl/
 *.synthesis/
@@ -120,6 +124,12 @@ out/
 *.img
 *.uf2
 *.dfu
+
+# Allow small source memory images when they are part of an experiment.
+!labs/**/*.hex
+!labs/**/*.mem
+!labs/**/*.mif
+!labs/**/*.coe
 
 # Python helper cache
 __pycache__/

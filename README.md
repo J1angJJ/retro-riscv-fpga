@@ -2,7 +2,7 @@
 
 计算机体系结构课程项目仓库，围绕 Tang Nano 20K FPGA、Verilog、NES FPGA 示例和 RISC-V 处理器实验展开。
 
-## Repository Policy
+## 仓库管理策略
 
 - `docs/` 保存课程初始给定的任务需求、评分标准和报告模板。
 - 后续实验代码、工程配置、脚本和对外说明直接纳入本仓库管理。

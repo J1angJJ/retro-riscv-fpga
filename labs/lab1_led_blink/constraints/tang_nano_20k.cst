@@ -3,7 +3,7 @@
 // LED0 is active low and connected to FPGA PIN15.
 
 IO_LOC "clk_27m" 4;
-IO_PORT "clk_27m" IO_TYPE=LVCMOS33 PULL_MODE=NONE;
+IO_PORT "clk_27m" IO_TYPE=LVCMOS33 PULL_MODE=UP;
 
 IO_LOC "led0_n" 15;
 IO_PORT "led0_n" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8;
