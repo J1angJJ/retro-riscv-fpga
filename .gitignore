@@ -40,6 +40,30 @@ Desktop.ini
 *.gen/
 *.srcs/sources_1/bd/*/hw_handoff/
 
+# FPGA vendor generated files: Gowin EDA
+*.gprj.user
+*.gprj.user.*
+*.ipc
+*.temp/
+*.impl/
+*.synthesis/
+*.ao
+*.fs
+*.fi
+*.vo
+*.vm
+*.sdf
+*.syn
+*.pnr
+*.tr
+*.tim
+*.power
+*.place
+*.route
+*.pack
+*.sta
+*.fst.tmp
+
 # FPGA vendor generated files: Intel Quartus
 db/
 incremental_db/
@@ -55,12 +79,23 @@ simulation/
 *.sof
 *.pof
 *.jic
+*.sta.rpt
+*.fit.rpt
+*.asm.rpt
+*.map.rpt
+*.flow.rpt
+*.pow.rpt
+*.sta.summary
 
 # Simulation output
 work/
 transcript
 vsim.wlf
 obj_dir/
+*.vvp
+*.ghw
+*.ucdb
+*.wlf
 *.vcd
 *.fst
 *.lxt
@@ -78,6 +113,13 @@ out/
 *.dis
 *.bit
 *.bin
+*.hex
+*.mem
+*.mif
+*.coe
+*.img
+*.uf2
+*.dfu
 
 # Python helper cache
 __pycache__/
