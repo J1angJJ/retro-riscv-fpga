@@ -1,0 +1,50 @@
+* text=auto eol=lf
+
+*.bat text eol=crlf working-tree-encoding=UTF-8
+*.cmd text eol=crlf working-tree-encoding=UTF-8
+*.ps1 text eol=crlf working-tree-encoding=UTF-8
+
+*.md text diff=markdown working-tree-encoding=UTF-8
+*.txt text working-tree-encoding=UTF-8
+*.rst text working-tree-encoding=UTF-8
+*.tex text working-tree-encoding=UTF-8
+*.csv text working-tree-encoding=UTF-8
+
+*.v text working-tree-encoding=UTF-8
+*.vh text working-tree-encoding=UTF-8
+*.sv text working-tree-encoding=UTF-8
+*.svh text working-tree-encoding=UTF-8
+*.vhd text working-tree-encoding=UTF-8
+*.vhdl text working-tree-encoding=UTF-8
+*.tcl text working-tree-encoding=UTF-8
+*.sdc text working-tree-encoding=UTF-8
+*.xdc text working-tree-encoding=UTF-8
+*.qsf text working-tree-encoding=UTF-8
+*.qpf text working-tree-encoding=UTF-8
+*.qsys text working-tree-encoding=UTF-8
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.doc binary
+*.docx binary
+*.ppt binary
+*.pptx binary
+*.xls binary
+*.xlsx binary
+*.zip binary
+*.7z binary
+*.rar binary
+
+*.bit binary
+*.bin binary
+*.elf binary
+*.sof binary
+*.pof binary
+*.rpt binary
+*.wdb binary
+*.vcd binary
+*.fst binary

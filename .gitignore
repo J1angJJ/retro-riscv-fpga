@@ -1,0 +1,85 @@
+# Private workspace
+private/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Archives and local handoff packages
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+
+# FPGA vendor generated files: Xilinx Vivado
+.Xil/
+*.jou
+*.str
+*.wdb
+*.hw/
+*.ip_user_files/
+*.cache/
+*.runs/
+*.sim/
+*.gen/
+*.srcs/sources_1/bd/*/hw_handoff/
+
+# FPGA vendor generated files: Intel Quartus
+db/
+incremental_db/
+output_files/
+simulation/
+*.qws
+*.qdf
+*.smsg
+*.summary
+*.rpt
+*.done
+*.pin
+*.sof
+*.pof
+*.jic
+
+# Simulation output
+work/
+transcript
+vsim.wlf
+obj_dir/
+*.vcd
+*.fst
+*.lxt
+*.lxt2
+
+# Build output and RISC-V firmware artifacts
+build/
+dist/
+out/
+*.o
+*.d
+*.elf
+*.map
+*.lst
+*.dis
+*.bit
+*.bin
+
+# Python helper cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
