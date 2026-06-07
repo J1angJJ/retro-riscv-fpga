@@ -64,6 +64,7 @@ reg [6:0]fpioa_ot_reg[0:31];
 reg [4:0]fpioa_in_reg[0:127];
 wire [31:0]fpioa_in,fpioa_oe,fpioa_ot;//FPIOA输入数据，输出使能，输出数据
 wire [127:0]perips_in,perips_oe,perips_ot;//外设端口输入数据，输出使能，输出数据
+integer fpioa_init_i;
 
 //外设端口perips_in/oe数据输入
 localparam Enable = 1'b1;//开启
@@ -106,6 +107,9 @@ always @ (posedge clk or negedge rst_n) begin
         fpioa_ot_reg[29] <= 7'h0;
         fpioa_ot_reg[30] <= 7'h0;
         fpioa_ot_reg[31] <= 7'h0;
+        for (fpioa_init_i = 0; fpioa_init_i < 128; fpioa_init_i = fpioa_init_i + 1) begin
+            fpioa_in_reg[fpioa_init_i] <= 5'h0;
+        end
     end else begin
         if (we_i == 1'b1) begin
             if (waddr_i[7] == 1'b0) begin
@@ -157,7 +161,9 @@ generate//perips_ot,perips_oe连接至fpioa_ot,fpioa_oe
 for ( i=0 ; i<32 ; i=i+1 ) begin : gen_fpioa_output_mux
     assign fpioa_ot[i] = perips_ot[fpioa_ot_reg[i]];//mux选择输出数据来源
     assign fpioa_oe[i] = perips_oe[fpioa_ot_reg[i]];//mux选择输出使能来源
-    assign fpioa[i] = fpioa_oe[i] ? fpioa_ot[i] : 1'bz;//选择端口模式 输入输出控制
+    if (i != 0) begin : gen_fpioa_drive
+        assign fpioa[i] = fpioa_oe[i] ? fpioa_ot[i] : 1'bz;//选择端口模式 输入输出控制
+    end
 end
 endgenerate
 
