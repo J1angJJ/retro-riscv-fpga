@@ -76,7 +76,7 @@ localparam Disable = 1'b0;//关闭
 always @ (posedge clk or negedge rst_n) begin
     if (~rst_n) begin
         fpioa_ot_reg[ 0] <= 7'h0;
-        fpioa_ot_reg[ 1] <= 7'h0;
+        fpioa_ot_reg[ 1] <= 7'd7;
         fpioa_ot_reg[ 2] <= 7'h0;
         fpioa_ot_reg[ 3] <= 7'h0;
         fpioa_ot_reg[ 4] <= 7'h0;
@@ -110,6 +110,7 @@ always @ (posedge clk or negedge rst_n) begin
         for (fpioa_init_i = 0; fpioa_init_i < 128; fpioa_init_i = fpioa_init_i + 1) begin
             fpioa_in_reg[fpioa_init_i] <= 5'h0;
         end
+        fpioa_in_reg[2] <= 5'd0;
     end else begin
         if (we_i == 1'b1) begin
             if (waddr_i[7] == 1'b0) begin
@@ -142,7 +143,7 @@ end
 // 总线接口 读
 always @ (posedge clk) begin
     if (rd_i == 1'b1) begin
-        if (waddr_i[7] == 1'b0) begin
+        if (raddr_i[7] == 1'b0) begin
             data_o <= {fpioa_ot_reg[raddr_i[4:0]+3],fpioa_ot_reg[raddr_i[4:0]+2],fpioa_ot_reg[raddr_i[4:0]+1],fpioa_ot_reg[raddr_i[4:0]]};
         end
         else begin

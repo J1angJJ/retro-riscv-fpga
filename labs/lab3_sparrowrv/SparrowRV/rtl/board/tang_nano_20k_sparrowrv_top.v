@@ -9,24 +9,20 @@ module tang_nano_20k_sparrowrv_top (
 wire [31:0] fpioa;
 wire hx_valid;
 wire core_ex_trap_ready;
-reg [24:0] heartbeat_cnt;
+reg [24:0] heartbeat_cnt = 25'd0;
 
 assign uart_tx = fpioa[1];
 assign fpioa[0] = uart_rx;
 
-always @(posedge clk_27m or negedge rst_n) begin
-    if (!rst_n) begin
-        heartbeat_cnt <= 25'd0;
-    end else begin
-        heartbeat_cnt <= heartbeat_cnt + 25'd1;
-    end
+always @(posedge clk_27m) begin
+    heartbeat_cnt <= heartbeat_cnt + 25'd1;
 end
 
-assign led0_n = heartbeat_cnt[24];
+assign led0_n = hx_valid ? heartbeat_cnt[22] : heartbeat_cnt[24];
 
 sparrow_soc u_sparrow_soc (
     .clk(clk_27m),
-    .hard_rst_n(rst_n),
+    .hard_rst_n(1'b1),
     .hx_valid(hx_valid),
     .JTAG_TCK(1'b0),
     .JTAG_TMS(1'b0),

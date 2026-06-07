@@ -68,25 +68,42 @@ Tang Nano 20K 顶层包装再把：
 
 ## 软件编译准备
 
-当前本机尚未找到命令行 RISC-V GCC 和 `make`，因此还没有在本机完成 BSP 编译。SparrowRV 原工程支持两种路线：
+当前已使用 MRS2 完成一次 BSP 构建。MRS2 实际输出目录为：
+
+- `SparrowRV/bsp/obj/SparrowRV.bin`
+- `SparrowRV/bsp/obj/SparrowRV.elf`
+- `SparrowRV/bsp/obj/SparrowRV.lst`
+- `SparrowRV/bsp/obj/SparrowRV.map`
+
+这些文件属于构建产物，已被 `.gitignore` 忽略。
+
+SparrowRV 原工程支持两种软件构建路线：
 
 - 使用 MounRiver Studio 打开 `SparrowRV/bsp/SparrowRV.wvproj` 编译。
 - 安装 `RISC-V_Embedded_GCC` 后在 `SparrowRV/bsp/app/` 下执行 `make`。
 
-编译后需要得到类似 `obj.bin` 的程序二进制。随后运行：
+编译后需要将程序二进制转为 IRAM 初始化文件。MRS2 构建成功后运行：
 
 ```powershell
 cd R:\retro-riscv-fpga
-python .\labs\lab3_sparrowrv\tools\bin_to_readmemh.py `
-  .\labs\lab3_sparrowrv\SparrowRV\bsp\app\obj.bin `
+C:\Users\JJ406\.conda\envs\dip\python.exe .\labs\lab3_sparrowrv\tools\bin_to_readmemh.py `
+  .\labs\lab3_sparrowrv\SparrowRV\bsp\obj\SparrowRV.bin `
   .\labs\lab3_sparrowrv\SparrowRV\bsp\obj\SparrowRV.mif
 ```
 
 `SparrowRV/rtl/core/iram.v` 当前会从 `../../bsp/obj/SparrowRV.mif` 初始化指令 RAM。这个文件是 `readmemh` 风格的 32 位十六进制文本，扩展名保留为 `.mif` 是为了匹配原工程路径。
 
+当前已生成：
+
+- `SparrowRV/bsp/obj/SparrowRV.mif`
+
 ## Gowin 工程建议
 
-在 Gowin IDE 中新建 Lab 3 工程：
+当前 Gowin 工程已经建立并填充文件列表：
+
+- `gowin/lab3_sparrowrv/lab3_sparrowrv.gprj`
+
+工程配置：
 
 - 工程名：`lab3_sparrowrv`
 - 器件：`GW2AR-LV18QN88C8/I7`
@@ -104,6 +121,8 @@ python .\labs\lab3_sparrowrv\tools\bin_to_readmemh.py `
 - 约束：
   - `constraints/tang_nano_20k_sparrowrv.cst`
   - `constraints/tang_nano_20k_sparrowrv.sdc`
+
+`impl/` 和 `.gprj.user` 是 Gowin 生成文件，已由 `.gitignore` 忽略。
 
 ## 串口验证
 
@@ -125,8 +144,9 @@ python .\labs\lab3_sparrowrv\tools\bin_to_readmemh.py `
 
 ## 待完成
 
-1. 安装或配置 RISC-V GCC / MRS，编译 `bsp/app/main.c`。
-2. 生成 `SparrowRV.mif`。
-3. 在 Gowin 中创建工程并完成综合、布局布线。
-4. 使用 SRAM Program 下载比特流。
-5. 在 MobaXterm `COM4` 观察 Hello World 输出。
+1. 打开 `gowin/lab3_sparrowrv/lab3_sparrowrv.gprj`。
+2. 确认顶层模块为 `tang_nano_20k_sparrowrv_top`。
+3. 先运行综合。
+4. 综合通过后运行布局布线。
+5. 使用 SRAM Program 下载比特流。
+6. 在 MobaXterm `COM4` 观察 Hello World 输出。
