@@ -41,7 +41,11 @@
 - 已引入 Sipeed `TangNano-20K-example` 仓库中的 `nestang` 示例代码。
 - 已删除外部 Git 管理，由当前仓库统一接管。
 - 已把上游 `nestang/README.md` 改写为中文说明。
-- Lab 2 尚未开始本地重新编译；下一步是在 Gowin 中打开 `nestang/nes.gprj`。
+- Lab 2 已完成一次综合，综合成功但 warning 较多。
+- 首次布局布线因 `sys_clk` 和 `s1` 的 IO 电平默认值与 Bank VCCIO 冲突失败；已在 `nestang/src/nestang.cst` 中显式改为 `LVCMOS33`。
+- HDMI PLL 中旧器件参数 `GW2A-18C` 已改为当前工程目标 `GW2AR-18C`。
+- 重新综合和布局布线已成功，生成 `impl/pnr/nes.fs`。`PA1003` 已消失，当前仍有多条时钟相关 warning，后续需要继续整理约束。
+- 使用上届同学留下的 TF 卡实测可以进入 NES 游戏并游玩，Lab 2 的板上运行验证已通过。当前未重新制作 TF 卡镜像，后续如需复现可再按 `nes2img.py` 路线重新写卡。
 
 ## 源码阅读重点
 
@@ -68,6 +72,69 @@
 - 目标器件：`GW2AR-LV18QN88C8/I7`
 
 上游目录中的 `nes.fs` 是预编译比特流，当前被 `.gitignore` 忽略。后续实验优先从源码重新生成比特流。
+
+## 当前 PnR 结果
+
+2026-06-07 已完成一次本地布局布线并生成比特流：
+
+- `nestang/impl/pnr/nes.fs`
+- `nestang/impl/pnr/nes.bin`
+- `nestang/impl/pnr/nes.rpt.txt`
+
+这些文件位于 `impl/` 生成目录中，已由 `.gitignore` 忽略。
+
+当前 warning 主要分为两类：
+
+- 时钟创建 warning：多个内部信号被识别为时钟但没有显式创建时钟约束，例如 HDMI 音频时钟、手柄扫描信号、分频输出等。
+- 时钟关系 warning：部分内部时钟与 `clk` / `clk_p5` 的关系无法自动计算。
+
+这些 warning 暂不阻止生成比特流；后续报告中需要说明它们是时钟约束/时钟关系类 warning，没有阻塞本次实验运行。
+
+## 板上运行验证
+
+2026-06-07，使用已有 TF 卡内容进行实机验证：
+
+- TF 卡中已经有可用的 NES 游戏/镜像内容。
+- 板卡接入 TF 卡和 HDMI 后，可以进入游戏并实际游玩。
+- 当前操作方式还没有完全熟悉，但从实验验收角度看，NES 模拟器已经完成板上运行验证。
+- 本次没有把重新制作 TF 卡镜像作为必要步骤；如果后续需要展示完整可复现流程，再使用 `nestang/tools/nes2img.py` 重新生成 `games.img`。
+
+## TF 卡和手柄准备
+
+当前可用硬件：
+
+- 32G TF 卡。
+- 一个游戏手柄配件。
+
+一个手柄足够先验证玩家 1。默认玩家 1 引脚如下：
+
+| 玩家 1 信号 | FPGA 引脚 |
+| --- | --- |
+| `clk` | 17 |
+| `mosi` | 20 |
+| `miso` | 19 |
+| `cs` | 18 |
+
+TF 卡镜像通过 `nestang/tools/nes2img.py` 生成。该脚本依赖 Pillow：
+
+```powershell
+python -m pip install pillow
+```
+
+本机可以直接使用 conda 环境 `dip`，不用污染 base 环境。已确认：
+
+- `C:\Users\JJ406\.conda\envs\dip\python.exe`
+- Pillow 可用，版本为 `11.3.0`
+
+准备合法来源的 `.nes` 文件后，在 `nestang/tools/` 目录运行：
+
+```powershell
+C:\Users\JJ406\.conda\envs\dip\python.exe .\nes2img.py -o games.img game1.nes game2.nes
+```
+
+随后用 Balena Etcher 或其他可靠工具把 `games.img` 写入 32G TF 卡。写入会覆盖 TF 卡原内容，操作前需要确认盘符。写入后将 TF 卡插入 Tang Nano 20K，再用 Programmer 下载 `impl/pnr/nes.fs` 进行运行验证。
+
+`.nes` 文件应使用合法来源，例如自备卡带转储、NES homebrew / public domain 游戏，或 nesdev 社区测试 ROM。不要把来源不明的商业 ROM 放入仓库。
 
 ## 实验记录要求
 

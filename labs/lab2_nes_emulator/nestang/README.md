@@ -40,9 +40,27 @@ sudo dd if=games.img of=/dev/sdx bs=512
 
 注意：写 TF 卡镜像前必须确认目标盘符，避免误覆盖电脑硬盘。
 
+当前实验可使用 32G TF 卡。`games.img` 是原始镜像，不是普通文件复制；需要用 Balena Etcher 或等价工具写入整张 TF 卡。
+
+本次实验发现，上届同学留下的 TF 卡里已经有可用内容，直接插入后可以进入 NES 游戏并游玩。因此 Lab 2 的运行验证已经通过，重新制作 `games.img` 不是当前阻塞项。这里仍保留制卡步骤，作为后续复现实验或更换 ROM 时的参考。
+
+`nes2img.py` 依赖 Pillow。如果 Python 环境缺少 `PIL`，先安装：
+
+```powershell
+python -m pip install pillow
+```
+
+本机可使用 conda 环境 `dip`，无需在 base 环境安装依赖：
+
+```powershell
+C:\Users\JJ406\.conda\envs\dip\python.exe .\nes2img.py -o games.img game1.nes game2.nes
+```
+
+`.nes` 文件建议使用合法来源，例如自备卡带转储、homebrew / public domain 游戏或 nesdev 测试 ROM。
+
 ## 手柄连接
 
-默认工程使用两个手柄。上游说明中给出的默认引脚如下：
+默认工程支持两个手柄。当前只有一个手柄配件时，先连接玩家 1 即可。上游说明中给出的默认引脚如下：
 
 | 玩家 2 信号 | FPGA 引脚 | 玩家 1 信号 | FPGA 引脚 |
 | --- | --- | --- | --- |

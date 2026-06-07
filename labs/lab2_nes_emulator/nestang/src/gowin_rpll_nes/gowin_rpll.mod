@@ -1,7 +1,7 @@
--series GW2A
--device GW2A-18C
--package PBGA256
--part_number GW2A-LV18PG256C8/I7
+-series GW2AR
+-device GW2AR-18C
+-package QFN88
+-part_number GW2AR-LV18QN88C8/I7
 
 
 -mod_name Gowin_rPLL
@@ -10,7 +10,7 @@
 -type PLL
 -rPll true
 -file_type vlg
--dev_type GW2A-18C
+-dev_type GW2AR-18C
 -dyn_idiv_sel false
 -idiv_sel 4
 -dyn_fbdiv_sel false
