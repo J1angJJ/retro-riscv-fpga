@@ -50,14 +50,14 @@ module iram (
 */
 wire [31:0] rst_addr = `RstPC;//复位地址
 wire [`MemAddrBus]addra = iram_rstn_o ? rst_addr[31:2] : pc_n_i[31:2];
-wire [`MemBus]douta,doutia;
+wire [`MemBus]douta;
 assign inst_o = douta;
 
 //AXI4L总线交互
 reg [`MemAddrBus]addrb;
 reg web,enb;
 reg [3:0] wemb;
-wire [`MemBus]doutb,doutib;
+wire [`MemBus]doutb;
 reg [`MemBus]dinb;
 wire axi_whsk = iram_axi_awvalid & iram_axi_wvalid;//写通道握手
 wire axi_rhsk = iram_axi_arvalid & (~iram_axi_rvalid | (iram_axi_rvalid & iram_axi_rready)) & ~axi_whsk;//读通道握手,没有读响应
@@ -118,6 +118,23 @@ end
     localparam RAM_SEL="RTL_MODEL";//否则使用行为级建模
 `endif
 
+`ifdef GOWIN_FPGA
+gowin_dpb_iram inst_appram (
+    .clk    (clk),
+    .addra  (addra[12:0]),
+    .addrb  (addrb[12:0]),
+    .dina   (32'h0),
+    .dinb   (dinb),
+    .wea    (1'b0),
+    .web    (web),
+    .wema   (4'h0),
+    .wemb   (wemb),
+    .ena    (iram_rd_i | iram_rstn_o),
+    .enb    (enb),
+    .douta  (douta),
+    .doutb  (doutb)
+);
+`else
 dpram #(
     .RAM_DEPTH(`IRamSize),
     .RAM_SEL(RAM_SEL),
@@ -139,6 +156,7 @@ dpram #(
     .douta  (douta),
     .doutb  (doutb)
 );
+`endif
 
 
 function integer clogb2;

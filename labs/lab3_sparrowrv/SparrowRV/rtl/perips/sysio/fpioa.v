@@ -154,7 +154,7 @@ end
 //---------FPIOA数据交互-------------
 genvar i;
 generate//perips_ot,perips_oe连接至fpioa_ot,fpioa_oe
-for ( i=0 ; i<32 ; i=i+1 ) begin
+for ( i=0 ; i<32 ; i=i+1 ) begin : gen_fpioa_output_mux
     assign fpioa_ot[i] = perips_ot[fpioa_ot_reg[i]];//mux选择输出数据来源
     assign fpioa_oe[i] = perips_oe[fpioa_ot_reg[i]];//mux选择输出使能来源
     assign fpioa[i] = fpioa_oe[i] ? fpioa_ot[i] : 1'bz;//选择端口模式 输入输出控制
@@ -163,7 +163,7 @@ endgenerate
 
 assign fpioa_in = fpioa;//数据输入
 generate//fpioa_in连接至perips_in
-for ( i=0 ; i<128 ; i=i+1 ) begin
+for ( i=0 ; i<128 ; i=i+1 ) begin : gen_fpioa_input_mux
     assign perips_in[i] = fpioa_in[fpioa_in_reg[i]];
 end
 endgenerate

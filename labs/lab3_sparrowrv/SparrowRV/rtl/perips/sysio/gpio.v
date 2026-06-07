@@ -87,7 +87,7 @@ end
 //输出模式、使能
 genvar i;
 generate
-for (i=0; i<32; i=i+1) begin
+for (i=0; i<32; i=i+1) begin : gen_gpio_mode
     always @(*) begin
         case ({gpio_oec[i], gpio_odc[i]})
             2'b00: begin

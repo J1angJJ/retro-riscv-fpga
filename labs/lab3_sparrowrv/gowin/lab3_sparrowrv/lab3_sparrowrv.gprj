@@ -1,0 +1,38 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>5</Version>
+    <Device name="GW2AR-18C" pn="GW2AR-LV18QN88C8/I7">gw2ar18c-000</Device>
+    <FileList>
+        <File path="../../SparrowRV/rtl/board/tang_nano_20k_sparrowrv_top.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/config.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/defines.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/core.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/csr.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/div.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/dpram.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/gowin_dpb_iram.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/idex.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/iram.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/regs.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/rstc.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/sctr.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/core/trap.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/jtag/full_handshake_rx.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/jtag/full_handshake_tx.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/jtag/jtag_dm.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/jtag/jtag_driver.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/jtag/jtag_top.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/perips/axi4lite_2mt16s.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/perips/sram.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/perips/sysio/fpioa.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/perips/sysio/gpio.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/perips/sysio/spi.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/perips/sysio/sysio.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/perips/sysio/uart.v" type="file.verilog" enable="1"/>
+        <File path="../../SparrowRV/rtl/soc/sparrow_soc.v" type="file.verilog" enable="1"/>
+        <File path="../../constraints/tang_nano_20k_sparrowrv.cst" type="file.cst" enable="1"/>
+        <File path="../../constraints/tang_nano_20k_sparrowrv.sdc" type="file.sdc" enable="1"/>
+    </FileList>
+</Project>

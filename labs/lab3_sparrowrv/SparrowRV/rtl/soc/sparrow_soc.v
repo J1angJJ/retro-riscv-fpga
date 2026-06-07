@@ -109,6 +109,10 @@ wire                sysio_axi_arready;
 wire [`MemBus]      sysio_axi_rdata  ;
 wire                sysio_axi_rvalid ;
 wire                sysio_axi_rready ;
+wire rst_n;
+wire halt_req;
+wire soft_rst_en;
+wire jtag_rst_en;
 //
 //           定义线网
 //*********************************

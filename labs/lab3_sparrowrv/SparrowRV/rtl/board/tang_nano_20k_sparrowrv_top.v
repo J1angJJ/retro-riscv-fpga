@@ -10,12 +10,7 @@ wire [31:0] fpioa;
 wire hx_valid;
 wire core_ex_trap_ready;
 
-assign fpioa[0] = uart_rx;
 assign uart_tx = fpioa[1];
-
-assign fpioa[2] = 1'b0;
-assign fpioa[3] = 1'b0;
-assign fpioa[31:4] = 28'hzzzzzzz;
 
 assign led0_n = ~hx_valid;
 

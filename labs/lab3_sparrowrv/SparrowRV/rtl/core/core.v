@@ -89,6 +89,29 @@ wire [`RegBus] div_divisor;//除数
 wire [2:0] div_op;//除法指令
 wire [`RegBus] div_result;//除法结果
 wire [`InstAddrBus] mepc;//CSR mepc寄存器
+wire reg_we_idex;
+wire csr_we_idex;
+wire mem_we;
+wire mem_en;
+wire reg_we_sctr;
+wire csr_we_sctr;
+wire iram_rd;
+wire div_start;
+wire div_ready;
+wire mult_inst;
+wire iram_rstn;
+wire trap_in;
+wire trap_jump;
+wire idex_mret;
+wire trap_csr_we;
+wire ex_trap_valid;
+wire tcmp_trap_valid;
+wire ecall_trap;
+wire ebreak_trap;
+wire wfi_trap;
+wire inst_err_trap;
+wire soft_trap_valid;
+wire mstatus_MIE3;
 //-------------定义内部线网--------------
 sctr inst_sctr
 (

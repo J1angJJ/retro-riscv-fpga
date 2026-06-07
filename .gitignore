@@ -137,6 +137,7 @@ labs/lab3_sparrowrv/SparrowRV/doc/参考资料/
 labs/lab3_sparrowrv/SparrowRV/tb/tools/isa/generated/
 labs/lab3_sparrowrv/SparrowRV/tb/w25txt.rar
 labs/lab3_sparrowrv/SparrowRV/tools/
+labs/lab3_sparrowrv/SparrowRV/bsp/.mrs/
 labs/lab3_sparrowrv/SparrowRV/bsp/obj/
 labs/lab3_sparrowrv/SparrowRV/bsp/app/obj
 labs/lab3_sparrowrv/SparrowRV/bsp/app/obj.*

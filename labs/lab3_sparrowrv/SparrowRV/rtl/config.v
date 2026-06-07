@@ -48,6 +48,9 @@
 //启用安路EG4 FPGA原语生成BRAM
 //`define EG4_FPGA 1'b1
 
+// Enable Gowin DPB primitives for Tang Nano 20K IRAM.
+`define GOWIN_FPGA 1'b1
+
 //启用w25模型，会降低仿真速度
 //`define Flash25 1'b1
 

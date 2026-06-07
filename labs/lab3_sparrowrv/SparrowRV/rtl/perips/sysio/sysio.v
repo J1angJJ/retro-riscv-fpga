@@ -29,6 +29,18 @@ module sysio (
 wire [31:0] gpio_oe ;
 wire [31:0] gpio_out;
 wire [31:0] gpio_in ;
+wire uart0_tx;
+wire uart0_rx;
+wire uart1_tx;
+wire uart1_rx;
+wire spi0_mosi;
+wire spi0_miso;
+wire spi0_cs;
+wire spi0_clk;
+wire spi1_mosi;
+wire spi1_miso;
+wire spi1_cs;
+wire spi1_clk;
 //---------总线交互--------
 //写
 wire axi_whsk = sysio_axi_awvalid & sysio_axi_wvalid;//写通道、读地址握手
@@ -68,7 +80,7 @@ end
 wire [15:0]we_en;
 genvar i;
 generate
-for (i = 0; i<16; i=i+1) begin
+for (i = 0; i<16; i=i+1) begin : gen_we_decode
     assign we_en[i] = (sysio_axi_awaddr[11:8] == i)? axi_whsk : 1'b0;
 end
 endgenerate
@@ -76,7 +88,7 @@ endgenerate
 //读通道处理
 wire [15:0]rd_en;
 generate
-for (i = 0; i<16; i=i+1) begin
+for (i = 0; i<16; i=i+1) begin : gen_rd_decode
     assign rd_en[i] = (sysio_axi_araddr[11:8] == i)? axi_rhsk : 1'b0;
 end
 endgenerate
@@ -88,6 +100,16 @@ always @(posedge clk ) begin
         rd_en_r <= rd_en_r;
 end
 wire [`MemBus]data_o[0:15];
+assign data_o[5] = 32'h0;
+assign data_o[6] = 32'h0;
+assign data_o[7] = 32'h0;
+assign data_o[8] = 32'h0;
+assign data_o[9] = 32'h0;
+assign data_o[10] = 32'h0;
+assign data_o[11] = 32'h0;
+assign data_o[12] = 32'h0;
+assign data_o[13] = 32'h0;
+assign data_o[14] = 32'h0;
 assign dout = {32{rd_en_r[0]}} & data_o[0]
             | {32{rd_en_r[1]}} & data_o[1]
             | {32{rd_en_r[2]}} & data_o[2]

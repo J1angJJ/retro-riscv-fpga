@@ -36,50 +36,50 @@ generate
             
             integer init_i;
             initial begin
-                for (init_i = 0; init_i < RAM_DEPTH; init_i = init_i + 1) begin
-                    BRAM[init_i] = {RAM_WIDTH{1'b0}};
-                end
                 if (INIT_FILE != "NONE") begin
                     $readmemh(INIT_FILE, BRAM);
                 end
             end
 
-            reg [RAM_WIDTH-1:0] ram_data_a = {RAM_WIDTH{1'b0}};
-            reg [RAM_WIDTH-1:0] ram_data_b = {RAM_WIDTH{1'b0}};
+            reg [clogb2(RAM_DEPTH-1)-1:0] addra_reg = {clogb2(RAM_DEPTH-1){1'b0}};
+            reg [clogb2(RAM_DEPTH-1)-1:0] addrb_reg = {clogb2(RAM_DEPTH-1){1'b0}};
             always @(posedge clk)
-                if (ena) begin
-                    if (wea) begin
-                        if(wema[0])
-                            BRAM[addra][7:0] <= dina[7:0];
-                        if(wema[1])
-                            BRAM[addra][15:8] <= dina[15:8];
-                        if(wema[2])
-                            BRAM[addra][23:16] <= dina[23:16];
-                        if(wema[3])
-                            BRAM[addra][31:24] <= dina[31:24];
+                addra_reg <= addra;
+            always @(posedge clk)
+                if (ena & wea) begin
+                    if(wema[0]) begin
+                        BRAM[addra][7:0] <= dina[7:0];
                     end
-                    else begin
-                        ram_data_a <= BRAM[addra];
+                    if(wema[1]) begin
+                        BRAM[addra][15:8] <= dina[15:8];
+                    end
+                    if(wema[2]) begin
+                        BRAM[addra][23:16] <= dina[23:16];
+                    end
+                    if(wema[3]) begin
+                        BRAM[addra][31:24] <= dina[31:24];
                     end
                 end
+
             always @(posedge clk)
-                if (enb) begin
-                    if (web) begin
-                        if(wemb[0])
-                            BRAM[addrb][7:0] <= dinb[7:0];
-                        if(wemb[1])
-                            BRAM[addrb][15:8] <= dinb[15:8];
-                        if(wemb[2])
-                            BRAM[addrb][23:16] <= dinb[23:16];
-                        if(wemb[3])
-                            BRAM[addrb][31:24] <= dinb[31:24];
+                addrb_reg <= addrb;
+            always @(posedge clk)
+                if (enb & web) begin
+                    if(wemb[0]) begin
+                        BRAM[addrb][7:0] <= dinb[7:0];
                     end
-                    else begin
-                        ram_data_b <= BRAM[addrb];
+                    if(wemb[1]) begin
+                        BRAM[addrb][15:8] <= dinb[15:8];
+                    end
+                    if(wemb[2]) begin
+                        BRAM[addrb][23:16] <= dinb[23:16];
+                    end
+                    if(wemb[3]) begin
+                        BRAM[addrb][31:24] <= dinb[31:24];
                     end
                 end
-            assign douta = ram_data_a;
-            assign doutb = ram_data_b;
+            assign douta = BRAM[addra_reg];
+            assign doutb = BRAM[addrb_reg];
         end
 
         "EG4_32K": begin
