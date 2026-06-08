@@ -21,19 +21,13 @@ static void uart0_putc(uint8_t ch)
     uart0_delay();
 }
 
-static void uart0_puts_hello(void)
+static void uart0_put_demo(void)
 {
     uart0_putc('H');
     uart0_putc('e');
     uart0_putc('l');
     uart0_putc('l');
     uart0_putc('o');
-    uart0_putc(' ');
-    uart0_putc('w');
-    uart0_putc('o');
-    uart0_putc('r');
-    uart0_putc('l');
-    uart0_putc('d');
     uart0_putc(' ');
     uart0_putc('S');
     uart0_putc('p');
@@ -61,6 +55,24 @@ static void uart0_puts_hello(void)
     uart0_putc('K');
     uart0_putc('\r');
     uart0_putc('\n');
+    uart0_putc('J');
+    uart0_putc('1');
+    uart0_putc('a');
+    uart0_putc('n');
+    uart0_putc('g');
+    uart0_putc('J');
+    uart0_putc('J');
+    uart0_putc('\r');
+    uart0_putc('\n');
+    uart0_putc('2');
+    uart0_putc('7');
+    uart0_putc('M');
+    uart0_putc('H');
+    uart0_putc('z');
+    uart0_putc('\r');
+    uart0_putc('\n');
+    uart0_putc('\r');
+    uart0_putc('\n');
 }
 
 int main(void)
@@ -71,9 +83,9 @@ int main(void)
     REG32(UART0_CTRL) = 3u;
 
     while (1) {
-        uart0_puts_hello();
+        uart0_put_demo();
 
-        for (volatile uint32_t delay = 0; delay < 50000u; delay++) {
+        for (volatile uint32_t delay = 0; delay < 27000000u; delay++) {
         }
     }
 }
