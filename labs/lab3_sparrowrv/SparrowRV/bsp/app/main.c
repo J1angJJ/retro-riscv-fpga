@@ -4,17 +4,21 @@
 #define REG8(addr)  (*(volatile uint8_t *)(addr))
 
 #define UART0_CTRL   0x20000000u
-#define UART0_STATUS 0x20000004u
 #define UART0_BAUD   0x20000008u
 #define UART0_TXDATA 0x2000000cu
 #define FPIOA_OT1    0x20000f01u
 #define FPIOA_IN2    0x20000f82u
 
+static void uart0_delay(void)
+{
+    for (volatile uint32_t delay = 0; delay < 20000u; delay++) {
+    }
+}
+
 static void uart0_putc(uint8_t ch)
 {
-    while (REG32(UART0_STATUS) & 1u) {
-    }
     REG32(UART0_TXDATA) = ch;
+    uart0_delay();
 }
 
 static void uart0_puts_hello(void)
