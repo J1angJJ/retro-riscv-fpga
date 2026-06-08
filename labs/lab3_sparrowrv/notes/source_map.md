@@ -1,9 +1,9 @@
-# Lab 3 源码地图
+# SparrowRV 源码地图
 
 ## 顶层与 SoC
 
 - `SparrowRV/rtl/board/tang_nano_20k_sparrowrv_top.v`
-  - 本实验新增的 Tang Nano 20K 包装层。
+  - 本项目新增的 Tang Nano 20K 包装层。
   - 负责连接 27 MHz 时钟、复位、UART、LED 和 SparrowRV SoC。
 
 - `SparrowRV/rtl/soc/sparrow_soc.v`
@@ -30,11 +30,15 @@
 
 - `SparrowRV/rtl/core/iram.v`
   - 指令 RAM。
-  - 本实验让 RTL 行为模型支持从 `../../bsp/obj/SparrowRV.mif` 初始化程序。
+  - 当前 Tang Nano 20K 工程使用 `gowin_dpb_iram.v` 作为 Gowin DPB 指令 RAM 实现。
 
 - `SparrowRV/rtl/core/dpram.v`
   - 通用双端口 RAM。
   - 支持行为模型和原工程中的 EG4 原语分支。
+
+- `SparrowRV/rtl/core/gowin_dpb_iram.v`
+  - 由 `scripts/generate_gowin_iram.py` 根据 BSP 程序镜像生成。
+  - 用 Gowin DPB 原语承载指令存储初始化内容。
 
 - `SparrowRV/rtl/core/div.v`
   - 除法器。
@@ -70,7 +74,8 @@
 ## BSP 与软件
 
 - `SparrowRV/bsp/app/main.c`
-  - Lab 3 当前 Hello World 程序入口。
+  - 当前 Tang Nano 20K 演示程序入口。
+  - 使用固定延时直接写 UART0 TXDATA，避免 `printf` 和 UART 状态位轮询。
 
 - `SparrowRV/bsp/app/makefile`
   - 命令行编译入口。
@@ -84,6 +89,7 @@
 
 - `SparrowRV/bsp/lib/src/printf.c`
   - 轻量 printf 与 UART0 初始化。
+  - 当前板级演示程序未使用该路径，但它仍是原 BSP 示例的重要参考。
 
 ## 仿真
 
@@ -95,9 +101,9 @@
   - 原工程提供的仿真辅助脚本。
   - 能把 `.bin` 转成 `inst.txt` 或 `btrm.txt`。
 
-## 报告阅读重点
+## 阅读重点
 
 1. 解释两级流水线为什么把 `ID+EX+MEM+WB` 合并在一级。
 2. 说明 IRAM/SRAM、AXI4-Lite、sysio 的地址访问关系。
-3. 说明 Hello World 的路径：`main.c -> printf -> UART0 -> FPIOA -> 顶层 uart_tx -> BL616/串口终端`。
-4. 说明当前移植点：27 MHz 主频、IRAM 初始化文件、Tang Nano 20K 顶层与约束。
+3. 说明当前演示输出路径：`main.c -> UART0 TXDATA -> sysio/UART0 -> FPIOA -> 顶层 uart_tx -> BL616/串口终端`。
+4. 说明当前移植点：27 MHz 主频、Gowin DPB IRAM 初始化、Tang Nano 20K 顶层与约束。

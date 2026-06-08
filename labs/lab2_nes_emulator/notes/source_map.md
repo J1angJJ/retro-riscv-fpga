@@ -1,6 +1,6 @@
 # NESTang 源码地图
 
-本文件记录 `labs/lab2_nes_emulator/nestang/` 中当前 Lab 2 需要优先阅读的源码结构。
+本文件记录 `labs/lab2_nes_emulator/nestang/` 中优先阅读的源码结构，便于后续维护和复现。
 
 ## 工程入口
 
@@ -34,7 +34,7 @@
 - `Gowin_rPLL_hdmi`：生成 HDMI 高速时钟。
 - `Gowin_CLKDIV`：从 HDMI 高速时钟分频出像素时钟。
 
-这说明 Lab 2 的时钟结构比 Lab 1 复杂得多，后续报告中需要说明 NES 逻辑时钟、SDRAM 时钟和 HDMI 像素时钟不是同一个域。
+这说明 NES 工程的时钟结构比 LED 闪烁工程复杂得多。NES 逻辑时钟、SDRAM 时钟和 HDMI 像素时钟不是同一个域，后续维护时需要重点关注跨时钟域路径。
 
 ## NES 核心
 

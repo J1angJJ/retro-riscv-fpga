@@ -1,6 +1,6 @@
-# Lab 1：Tang Nano 20K LED 闪烁实验
+# Tang Nano 20K LED 闪烁工程
 
-本目录保存 Lab 1 的最小 Verilog 点灯实验。当前代码不依赖 Gowin IDE 即可阅读和仿真；等 IDE/license 可用后，再导入源码与约束进行综合、布局布线和烧录。
+本目录保存 Tang Nano 20K 的最小 Verilog LED 闪烁工程，用于验证 Gowin 工具链、板卡引脚约束、综合、布局布线和 SRAM 下载流程。
 
 ## 目录结构
 
@@ -48,7 +48,7 @@
 
 - `gowin/lab1_led_blink/lab1_led_blink.gprj`
 
-当前已确认教育版可选器件：
+当前已确认可选器件：
 
 - Part Number：`GW2AR-LV18QN88C8/I7`
 - Device：`GW2AR-18C`
@@ -83,3 +83,9 @@
 - `build/lab1_led_blink/led_blink_tb.vcd`
 
 `build/` 已被 `.gitignore` 忽略。
+
+## 协作注意事项
+
+- 源码和约束文件优先维护在 `src/` 与 `constraints/`，不要把 Gowin 自动复制出的同名文件当作主版本。
+- `gowin/` 中只保留必要工程文件和说明，`impl/`、工具报告、比特流等生成物不提交。
+- 如果调整 LED、时钟或 IO 电平，请同步更新本文件和 `boards/tang_nano_20k/README.md`。

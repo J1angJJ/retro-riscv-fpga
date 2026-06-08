@@ -1,8 +1,8 @@
-# Lab 1：Gowin 工程创建说明
+# LED 闪烁 Gowin 工程说明
 
 `labs/lab1_led_blink/` 只是源码目录，不是 Gowin IDE 工程目录。Gowin 需要打开 `.gprj` 工程文件，不能直接把源码文件夹当工程打开。
 
-## 方式一：在 IDE 中手动新建
+## 手动创建工程
 
 1. 打开 Gowin IDE。
 2. 选择新建 FPGA 设计工程。
@@ -26,9 +26,9 @@
 教育版 IDE 中 `GW2ARx` 系列下可选到的目标器件信息如下：
 
 - 工程名：`lab1_led_blink`
-- 工程目录：`R:\retro-riscv-fpga\labs\lab1_led_blink\gowin`
-- Gowin 默认源码目录：`R:\retro-riscv-fpga\labs\lab1_led_blink\gowin\lab1_led_blink\src`
-- Gowin 默认实现目录：`R:\retro-riscv-fpga\labs\lab1_led_blink\gowin\lab1_led_blink\impl`
+- 工程目录：`labs/lab1_led_blink/gowin`
+- Gowin 默认源码目录：`labs/lab1_led_blink/gowin/lab1_led_blink/src`
+- Gowin 默认实现目录：`labs/lab1_led_blink/gowin/lab1_led_blink/impl`
 - Part Number：`GW2AR-LV18QN88C8/I7`
 - Series：`GW2AR`
 - Device：`GW2AR-18C`
@@ -37,7 +37,7 @@
 
 注意：本仓库的主源码仍放在 `labs/lab1_led_blink/src/`，主约束仍放在 `labs/lab1_led_blink/constraints/`。Gowin 向导显示的默认源码目录只是工程内部默认位置；添加文件时优先添加本仓库已有文件，避免后续出现两份源码互相不同步。
 
-## 方式二：用脚本生成工程
+## 脚本生成工程
 
 如果 Gowin 的 `gw_sh` 已加入 `PATH`，在仓库根目录运行：
 
@@ -85,4 +85,10 @@
 - `TA1132`：`clk_27m` 被识别为时钟，但未创建时钟。
 - `PR1014`：`clk_27m_d` 使用通用布线资源作为时钟，可能带来延迟或偏斜。
 
-已新增 `constraints/tang_nano_20k.sdc` 声明 27 MHz 时钟。后续可重新综合和布局布线，确认 warning 是否减少。当前 LED 闪烁实验功能已可继续作为 Lab 1 初步结果记录。
+已新增 `constraints/tang_nano_20k.sdc` 声明 27 MHz 时钟。后续可重新综合和布局布线，确认 warning 是否减少。当前 LED 闪烁功能已可作为最小板级验证结果。
+
+## 协作注意事项
+
+- 打开工程时使用 `.gprj` 文件，不要直接打开 `gowin/` 目录。
+- 工程文件列表应引用仓库中的主源码和主约束，避免在 Gowin 默认 `src/` 目录里维护第二份副本。
+- 生成的 `impl/`、`.fs`、`.rpt`、`.log` 等文件不提交。
